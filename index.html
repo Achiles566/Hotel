@@ -1,0 +1,3018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<meta name="theme-color" content="#10100e">
+
+<meta name="description"
+      content="Maison Aurelune — a fictional private coastal retreat on the Isle of Vellamar.">
+
+<title>Maison Aurelune — Private Coastal Retreat</title>
+<!-- Favicon / Tab Logo -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2311110f'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-family='Georgia,serif' font-size='62' fill='%23d4b67f'%3EA%3C/text%3E%3C/svg%3E">
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500;600&display=swap"
+      rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+    --cream: #f4f0e8;
+    --cream-light: #faf8f3;
+    --ink: #151512;
+    --muted: #716e65;
+    --gold: #b9955b;
+    --gold-light: #d4b67f;
+    --line: rgba(21, 21, 18, .13);
+    --dark-line: rgba(255,255,255,.16);
+
+    --serif: "Cormorant Garamond", Georgia, serif;
+    --sans: "Jost", Arial, sans-serif;
+
+    --container: 1240px;
+}
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--cream-light);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+::selection {
+    background: var(--gold);
+    color: white;
+}
+
+/* =========================================================
+   SCROLL PROGRESS
+========================================================= */
+
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: var(--gold);
+    z-index: 9999;
+}
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container {
+    width: min(calc(100% - 48px), var(--container));
+    margin: auto;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    color: white;
+    transition:
+        background .4s ease,
+        backdrop-filter .4s ease,
+        padding .4s ease;
+}
+
+.site-header.scrolled {
+    background: rgba(15, 15, 13, .88);
+    backdrop-filter: blur(18px);
+}
+
+.nav {
+    min-height: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.logo {
+    font-family: var(--serif);
+    font-size: 30px;
+    letter-spacing: .18em;
+    white-space: nowrap;
+}
+
+.logo small {
+    display: block;
+    font-family: var(--sans);
+    font-size: 8px;
+    letter-spacing: .42em;
+    margin-top: -4px;
+    opacity: .75;
+    text-align: center;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+}
+
+.nav-links a {
+    position: relative;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .17em;
+    opacity: .82;
+    transition: opacity .3s ease;
+}
+
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -7px;
+    width: 0;
+    height: 1px;
+    background: var(--gold-light);
+    transition: width .3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    opacity: 1;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.nav-reserve {
+    border: 1px solid rgba(255,255,255,.5);
+    padding: 12px 18px;
+    font-size: 10px !important;
+    letter-spacing: .18em !important;
+    transition: .3s ease;
+}
+
+.nav-reserve:hover {
+    background: white;
+    color: var(--ink);
+}
+
+.nav-reserve::after {
+    display: none;
+}
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+.menu-button {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255,255,255,.4);
+    background: transparent;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.menu-button span {
+    width: 19px;
+    height: 1px;
+    background: currentColor;
+    transition: .3s ease;
+}
+
+.menu-button.open span:first-child {
+    transform: translateY(3px) rotate(45deg);
+}
+
+.menu-button.open span:last-child {
+    transform: translateY(-3px) rotate(-45deg);
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    min-height: 100svh;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    color: white;
+    overflow: hidden;
+}
+
+.hero-image {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    animation: heroZoom 14s ease-out forwards;
+}
+
+@keyframes heroZoom {
+    from {
+        transform: scale(1.08);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.45),
+            transparent 38%,
+            rgba(0,0,0,.72)
+        );
+}
+
+.hero-content {
+    width: min(calc(100% - 48px), var(--container));
+    margin: 0 auto;
+    padding-bottom: 110px;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: .34em;
+    font-size: 10px;
+    color: var(--gold-light);
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(60px, 9vw, 130px);
+    font-weight: 400;
+    line-height: .82;
+    letter-spacing: -.035em;
+    max-width: 900px;
+}
+
+.hero-subtitle {
+    max-width: 470px;
+    margin-top: 28px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(255,255,255,.82);
+}
+
+.hero-actions {
+    margin-top: 35px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.button {
+    border: 1px solid rgba(255,255,255,.65);
+    padding: 15px 24px;
+    background: rgba(255,255,255,.04);
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: .18em;
+    font-size: 10px;
+    transition: .3s ease;
+    backdrop-filter: blur(6px);
+}
+
+.button:hover {
+    background: white;
+    color: var(--ink);
+}
+
+.button.gold {
+    background: var(--gold);
+    border-color: var(--gold);
+}
+
+.button.gold:hover {
+    background: white;
+    border-color: white;
+}
+
+.scroll-indicator {
+    position: absolute;
+    right: 35px;
+    bottom: 42px;
+    writing-mode: vertical-rl;
+    text-transform: uppercase;
+    letter-spacing: .25em;
+    font-size: 9px;
+    opacity: .65;
+}
+
+/* =========================================================
+   SECTION COMMON
+========================================================= */
+
+section {
+    padding: 120px 0;
+}
+
+.section-head {
+    margin-bottom: 55px;
+}
+
+.section-label {
+    text-transform: uppercase;
+    letter-spacing: .28em;
+    color: var(--gold);
+    font-size: 10px;
+    margin-bottom: 15px;
+}
+
+.section-title {
+    font-family: var(--serif);
+    font-size: clamp(44px, 6vw, 76px);
+    font-weight: 400;
+    line-height: .95;
+}
+
+.section-description {
+    max-width: 550px;
+    margin-top: 22px;
+    color: var(--muted);
+}
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro {
+    background: var(--cream-light);
+}
+
+.intro-grid {
+    display: grid;
+    grid-template-columns: .8fr 1.2fr;
+    gap: 90px;
+    align-items: center;
+}
+
+.intro-text p {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.9;
+    margin-bottom: 22px;
+}
+
+.intro-image {
+    position: relative;
+    height: 650px;
+    overflow: hidden;
+}
+
+.intro-image img {
+    height: 100%;
+    object-fit: cover;
+    transition: transform .8s ease;
+}
+
+.intro-image:hover img {
+    transform: scale(1.04);
+}
+
+.image-caption {
+    position: absolute;
+    left: 24px;
+    bottom: 22px;
+    color: white;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    text-shadow: 0 2px 12px rgba(0,0,0,.5);
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats {
+    padding: 35px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.stat {
+    text-align: center;
+    padding: 18px;
+    border-right: 1px solid var(--line);
+}
+
+.stat:last-child {
+    border-right: 0;
+}
+
+.stat-number {
+    font-family: var(--serif);
+    font-size: 42px;
+}
+
+.stat-label {
+    margin-top: 5px;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    color: var(--muted);
+}
+
+/* =========================================================
+   SUITES
+========================================================= */
+
+.suites {
+    background: #eee9df;
+}
+
+.suite-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.suite-card {
+    background: var(--cream-light);
+    overflow: hidden;
+    transition: transform .4s ease, box-shadow .4s ease;
+}
+
+.suite-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 55px rgba(0,0,0,.1);
+}
+
+.suite-image {
+    height: 450px;
+    overflow: hidden;
+}
+
+.suite-image img {
+    height: 100%;
+    object-fit: cover;
+    transition: transform .8s ease;
+}
+
+.suite-card:hover .suite-image img {
+    transform: scale(1.06);
+}
+
+.suite-content {
+    padding: 30px;
+}
+
+.suite-content h3 {
+    font-family: var(--serif);
+    font-size: 35px;
+    font-weight: 500;
+}
+
+.suite-content p {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.suite-meta {
+    display: flex;
+    gap: 18px;
+    margin-top: 20px;
+    color: var(--gold);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+}
+
+/* =========================================================
+   FEATURE IMAGE
+========================================================= */
+
+.feature-image {
+    height: 75vh;
+    min-height: 520px;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-image img {
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 1s ease;
+}
+
+.feature-image:hover img {
+    transform: scale(1.025);
+}
+
+.feature-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    padding: 70px;
+    color: white;
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.7),
+            transparent 60%
+        );
+}
+
+.feature-overlay h2 {
+    font-family: var(--serif);
+    font-size: clamp(45px, 7vw, 85px);
+    font-weight: 400;
+    line-height: .9;
+}
+
+/* =========================================================
+   DINING
+========================================================= */
+
+.dining {
+    background: var(--cream-light);
+}
+
+.dining-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+    align-items: center;
+}
+
+.dining-image {
+    height: 650px;
+    overflow: hidden;
+}
+
+.dining-image img {
+    height: 100%;
+    object-fit: cover;
+    transition: transform .8s ease;
+}
+
+.dining-image:hover img {
+    transform: scale(1.04);
+}
+
+.dining-list {
+    border-top: 1px solid var(--line);
+}
+
+.dining-item {
+    padding: 25px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.dining-item h3 {
+    font-family: var(--serif);
+    font-size: 35px;
+    font-weight: 500;
+}
+
+.dining-item p {
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+/* =========================================================
+   EXPERIENCES
+========================================================= */
+
+.experiences {
+    background: #151512;
+    color: white;
+}
+
+.experience-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.experience-card {
+    position: relative;
+    height: 430px;
+    overflow: hidden;
+}
+
+.experience-card img {
+    height: 100%;
+    object-fit: cover;
+    transition: transform .8s ease;
+}
+
+.experience-card:hover img {
+    transform: scale(1.07);
+}
+
+.experience-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,.75),
+        transparent 60%
+    );
+}
+
+.experience-content {
+    position: absolute;
+    left: 30px;
+    right: 30px;
+    bottom: 28px;
+    z-index: 2;
+}
+
+.experience-content h3 {
+    font-family: var(--serif);
+    font-size: 38px;
+    font-weight: 400;
+}
+
+.experience-content p {
+    max-width: 450px;
+    color: rgba(255,255,255,.72);
+    font-size: 13px;
+}
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+.gallery {
+    background: var(--cream-light);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 240px;
+    gap: 14px;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.gallery-item:nth-child(1) {
+    grid-column: span 7;
+    grid-row: span 2;
+}
+
+.gallery-item:nth-child(2) {
+    grid-column: span 5;
+}
+
+.gallery-item:nth-child(3) {
+    grid-column: span 5;
+}
+
+.gallery-item:nth-child(4) {
+    grid-column: span 4;
+}
+
+.gallery-item:nth-child(5) {
+    grid-column: span 4;
+}
+
+.gallery-item:nth-child(6) {
+    grid-column: span 4;
+}
+
+.gallery-item img {
+    height: 100%;
+    object-fit: cover;
+    transition: transform .7s ease, filter .5s ease;
+}
+
+.gallery-item::after {
+    content: "VIEW";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: white;
+    font-size: 10px;
+    letter-spacing: .25em;
+    background: rgba(0,0,0,.28);
+    opacity: 0;
+    transition: opacity .4s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.06);
+    filter: brightness(.8);
+}
+
+.gallery-item:hover::after {
+    opacity: 1;
+}
+
+/* =========================================================
+   AMENITIES
+========================================================= */
+
+.amenities {
+    background: #e8e2d6;
+}
+
+.amenity-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+}
+
+.amenity {
+    padding: 35px 25px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+
+.amenity-number {
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: .2em;
+}
+
+.amenity h3 {
+    margin-top: 18px;
+    font-family: var(--serif);
+    font-size: 27px;
+    font-weight: 500;
+}
+
+.amenity p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 7px;
+}
+
+/* =========================================================
+   TESTIMONIAL
+========================================================= */
+
+.testimonials {
+    background: var(--cream-light);
+    text-align: center;
+}
+
+.testimonial-wrap {
+    max-width: 850px;
+    margin: auto;
+}
+
+.quote-mark {
+    font-family: var(--serif);
+    font-size: 90px;
+    color: var(--gold);
+    line-height: .6;
+}
+
+.quote {
+    font-family: var(--serif);
+    font-size: clamp(30px, 4vw, 50px);
+    line-height: 1.15;
+    margin-top: 30px;
+}
+
+.quote-author {
+    margin-top: 30px;
+    color: var(--muted);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .25em;
+}
+
+.testimonial-controls {
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.testimonial-controls button {
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--line);
+    background: transparent;
+    transition: .3s ease;
+}
+
+.testimonial-controls button:hover {
+    background: var(--ink);
+    color: white;
+}
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.final-cta {
+    position: relative;
+    min-height: 680px;
+    display: flex;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+}
+
+.final-cta-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+}
+
+.final-cta-bg img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.final-cta::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgba(0,0,0,.52);
+}
+
+.cta-content {
+    max-width: 700px;
+}
+
+.cta-content h2 {
+    font-family: var(--serif);
+    font-size: clamp(55px, 8vw, 100px);
+    font-weight: 400;
+    line-height: .9;
+}
+
+.cta-content p {
+    max-width: 500px;
+    margin: 25px 0 30px;
+    color: rgba(255,255,255,.78);
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    background: #11110f;
+    color: white;
+    padding: 70px 0 35px;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    padding-bottom: 55px;
+    border-bottom: 1px solid var(--dark-line);
+}
+
+.footer-brand h2 {
+    font-family: var(--serif);
+    font-size: 45px;
+    font-weight: 400;
+    letter-spacing: .08em;
+}
+
+.footer-brand p {
+    margin-top: 10px;
+    color: rgba(255,255,255,.55);
+    font-size: 12px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 60px;
+}
+
+.footer-column h4 {
+    color: var(--gold-light);
+    text-transform: uppercase;
+    letter-spacing: .18em;
+    font-size: 9px;
+    margin-bottom: 18px;
+}
+
+.footer-column a {
+    display: block;
+    color: rgba(255,255,255,.62);
+    font-size: 12px;
+    margin-bottom: 9px;
+    transition: color .3s ease;
+}
+
+.footer-column a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    padding-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    color: rgba(255,255,255,.4);
+    font-size: 10px;
+}
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    background: rgba(0,0,0,.72);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    visibility: hidden;
+    transition: .35s ease;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-box {
+    position: relative;
+    width: min(600px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--cream-light);
+    padding: 45px;
+    transform: translateY(25px);
+    transition: .35s ease;
+}
+
+.modal.show .modal-box {
+    transform: translateY(0);
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--line);
+    background: transparent;
+    font-size: 20px;
+}
+
+.modal-title {
+    font-family: var(--serif);
+    font-size: 50px;
+    font-weight: 400;
+    line-height: .9;
+}
+
+.modal-description {
+    color: var(--muted);
+    margin: 15px 0 30px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .18em;
+    color: var(--muted);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    border: 1px solid var(--line);
+    background: white;
+    padding: 13px;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--gold);
+}
+
+.form-submit {
+    width: 100%;
+    margin-top: 20px;
+    padding: 16px;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    font-size: 10px;
+    transition: .3s ease;
+}
+
+.form-submit:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+}
+
+.success-message {
+    display: none;
+    padding: 30px 0 10px;
+    text-align: center;
+}
+
+.success-message.show {
+    display: block;
+}
+
+.success-message .check {
+    font-size: 45px;
+    color: var(--gold);
+}
+
+/* =========================================================
+   LIGHTBOX
+========================================================= */
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 6000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    background: rgba(0,0,0,.94);
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s ease;
+}
+
+.lightbox.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox img {
+    max-width: min(1200px, 95vw);
+    max-height: 88vh;
+    width: auto;
+    object-fit: contain;
+}
+
+.lightbox-close {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    width: 45px;
+    height: 45px;
+    border: 1px solid rgba(255,255,255,.4);
+    background: transparent;
+    color: white;
+    font-size: 24px;
+}
+
+/* =========================================================
+   REVEAL ANIMATION
+========================================================= */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .nav-links {
+        gap: 18px;
+    }
+
+    .intro-grid,
+    .dining-grid {
+        gap: 45px;
+    }
+
+    .suite-image {
+        height: 370px;
+    }
+
+    .amenity-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 800px) {
+
+    .container,
+    .hero-content {
+        width: min(calc(100% - 32px), var(--container));
+    }
+
+    .nav {
+        min-height: 75px;
+    }
+
+    .menu-button {
+        display: flex;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 75px;
+        left: 16px;
+        right: 16px;
+
+        padding: 25px;
+
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+
+        background: rgba(15,15,13,.97);
+        backdrop-filter: blur(20px);
+
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+
+        transition: .3s ease;
+    }
+
+    .nav-links.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .nav-links li {
+        border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+
+    .nav-links li:last-child {
+        border: 0;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 15px 0;
+    }
+
+    .nav-reserve {
+        border: 0;
+        padding: 15px 0;
+    }
+
+    .hero-content {
+        padding-bottom: 80px;
+    }
+
+    .scroll-indicator {
+        display: none;
+    }
+
+    section {
+        padding: 80px 0;
+    }
+
+    .intro-grid,
+    .dining-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .intro-image,
+    .dining-image {
+        height: 500px;
+    }
+
+    .suite-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .suite-image {
+        height: 500px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat:nth-child(2) {
+        border-right: 0;
+    }
+
+    .stat:nth-child(-n+2) {
+        border-bottom: 1px solid var(--line);
+    }
+
+    .experience-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .experience-card {
+        height: 450px;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 220px;
+    }
+
+    .gallery-item:nth-child(n) {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    .gallery-item:first-child {
+        grid-column: span 2;
+        grid-row: span 2;
+    }
+
+    .footer-top {
+        flex-direction: column;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+        gap: 40px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 520px) {
+
+    .logo {
+        font-size: 25px;
+    }
+
+    .hero h1 {
+        font-size: 60px;
+    }
+
+    .hero-subtitle {
+        font-size: 13px;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .button {
+        text-align: center;
+    }
+
+    .intro-image,
+    .dining-image {
+        height: 400px;
+    }
+
+    .suite-image {
+        height: 390px;
+    }
+
+    .feature-image {
+        min-height: 450px;
+    }
+
+    .feature-overlay {
+        padding: 35px 20px;
+    }
+
+    .amenity-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-grid {
+        grid-auto-rows: 190px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: auto;
+    }
+
+    .modal-box {
+        padding: 35px 22px;
+    }
+
+    .modal-title {
+        font-size: 43px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =======================================================
+     SCROLL PROGRESS
+======================================================= -->
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
+<header class="site-header" id="header">
+
+    <div class="container nav">
+
+        <a href="#home" class="logo">
+            AURELUNE
+            <small>PRIVATE RETREAT</small>
+        </a>
+
+        <button class="menu-button"
+                id="menuButton"
+                aria-label="Open navigation menu">
+
+            <span></span>
+            <span></span>
+
+        </button>
+
+        <ul class="nav-links" id="navLinks">
+
+            <li>
+                <a href="#about">The Maison</a>
+            </li>
+
+            <li>
+                <a href="#suites">Suites</a>
+            </li>
+
+            <li>
+                <a href="#dining">Dining</a>
+            </li>
+
+            <li>
+                <a href="#experiences">Experiences</a>
+            </li>
+
+            <li>
+                <a href="#gallery">Gallery</a>
+            </li>
+
+            <li>
+                <a href="#reserve" class="nav-reserve reserve-trigger">
+                    Reserve
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+</header>
+
+
+<!-- =======================================================
+     HERO
+======================================================= -->
+
+<main id="home">
+
+<section class="hero">
+
+    <div class="hero-image">
+        <img
+            src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=2200&q=90"
+            alt="Luxury resort pool surrounded by tropical greenery"
+            fetchpriority="high">
+    </div>
+
+    <div class="hero-content reveal">
+
+        <div class="eyebrow">
+            Isle of Vellamar · A Fictional Retreat
+        </div>
+
+        <h1>
+            Maison<br>
+            Aurelune
+        </h1>
+
+        <p class="hero-subtitle">
+            A private coastal retreat shaped by warm light,
+            quiet mornings, and the rhythm of the sea.
+        </p>
+
+        <div class="hero-actions">
+
+            <button class="button gold reserve-trigger">
+                Reserve Your Stay
+            </button>
+
+            <a href="#about" class="button">
+                Discover the Maison
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="scroll-indicator">
+        Scroll to explore
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     ABOUT
+======================================================= -->
+
+<section class="intro" id="about">
+
+    <div class="container">
+
+        <div class="intro-grid">
+
+            <div class="intro-text reveal">
+
+                <div class="section-label">
+                    The Maison
+                </div>
+
+                <h2 class="section-title">
+                    A house of<br>
+                    quiet light.
+                </h2>
+
+                <p>
+                    Hidden along a fictional Mediterranean coastline,
+                    Maison Aurelune was imagined as a place where the
+                    outside world slows down.
+                </p>
+
+                <p>
+                    Every space opens naturally toward the sea —
+                    from sunlit suites to intimate dining rooms,
+                    private gardens and secluded coves.
+                </p>
+
+                <p>
+                    Nothing here asks for your attention.
+                    Everything simply invites you to stay a little longer.
+                </p>
+
+            </div>
+
+            <div class="intro-image reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=85"
+                    alt="Elegant luxury interior with warm natural light"
+                    loading="lazy">
+
+                <div class="image-caption">
+                    The Maison · Interior
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     STATS
+======================================================= -->
+
+<div class="stats">
+
+    <div class="container stats-grid">
+
+        <div class="stat reveal">
+            <div class="stat-number">38</div>
+            <div class="stat-label">Suites & Villas</div>
+        </div>
+
+        <div class="stat reveal">
+            <div class="stat-number">03</div>
+            <div class="stat-label">Private Coves</div>
+        </div>
+
+        <div class="stat reveal">
+            <div class="stat-number">24h</div>
+            <div class="stat-label">Concierge</div>
+        </div>
+
+        <div class="stat reveal">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">Sea Views</div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     SUITES
+======================================================= -->
+
+<section class="suites" id="suites">
+
+    <div class="container">
+
+        <div class="section-head reveal">
+
+            <div class="section-label">
+                Stay
+            </div>
+
+            <h2 class="section-title">
+                Rooms with<br>
+                a view.
+            </h2>
+
+            <p class="section-description">
+                Three different expressions of the Maison,
+                each designed around natural light, privacy,
+                and uninterrupted views.
+            </p>
+
+        </div>
+
+
+        <div class="suite-grid">
+
+            <!-- Suite 1 -->
+
+            <article class="suite-card reveal">
+
+                <div class="suite-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=85"
+                        alt="Luxury hotel suite"
+                        loading="lazy">
+
+                </div>
+
+                <div class="suite-content">
+
+                    <h3>
+                        Horizon Suite
+                    </h3>
+
+                    <p>
+                        Floor-to-ceiling windows frame the
+                        changing colours of the sea.
+                    </p>
+
+                    <div class="suite-meta">
+                        <span>78 m²</span>
+                        <span>Ocean View</span>
+                        <span>King Bed</span>
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- Suite 2 -->
+
+            <article class="suite-card reveal">
+
+                <div class="suite-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1200&q=85"
+                        alt="Elegant modern bedroom"
+                        loading="lazy">
+
+                </div>
+
+                <div class="suite-content">
+
+                    <h3>
+                        Villa Crepuscolo
+                    </h3>
+
+                    <p>
+                        A private villa designed for long
+                        afternoons and quiet evenings.
+                    </p>
+
+                    <div class="suite-meta">
+                        <span>112 m²</span>
+                        <span>Private Pool</span>
+                        <span>Terrace</span>
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- Suite 3 -->
+
+            <article class="suite-card reveal">
+
+                <div class="suite-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85"
+                        alt="Luxury bedroom with elegant interior"
+                        loading="lazy">
+
+                </div>
+
+                <div class="suite-content">
+
+                    <h3>
+                        Olive Garden Suite
+                    </h3>
+
+                    <p>
+                        A secluded garden residence surrounded
+                        by olive trees and soft morning light.
+                    </p>
+
+                    <div class="suite-meta">
+                        <span>92 m²</span>
+                        <span>Garden</span>
+                        <span>Private Terrace</span>
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     FEATURE
+======================================================= -->
+
+<section style="padding:0;">
+
+    <div class="feature-image">
+
+        <img
+            src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2200&q=90"
+            alt="Beautiful coastline and ocean"
+            loading="lazy">
+
+        <div class="feature-overlay">
+
+            <div>
+
+                <div class="section-label">
+                    Beyond the Maison
+                </div>
+
+                <h2>
+                    The sea is<br>
+                    always near.
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     DINING
+======================================================= -->
+
+<section class="dining" id="dining">
+
+    <div class="container">
+
+        <div class="dining-grid">
+
+            <div class="dining-image reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=85"
+                    alt="Elegant restaurant interior"
+                    loading="lazy">
+
+            </div>
+
+
+            <div class="reveal">
+
+                <div class="section-label">
+                    Dining
+                </div>
+
+                <h2 class="section-title">
+                    Food that<br>
+                    follows the coast.
+                </h2>
+
+                <p class="section-description">
+                    Three spaces, one philosophy:
+                    local ingredients, simple techniques,
+                    and meals that belong to the landscape.
+                </p>
+
+
+                <div class="dining-list">
+
+                    <div class="dining-item">
+
+                        <h3>
+                            Salvia
+                        </h3>
+
+                        <p>
+                            Mediterranean tasting menus
+                            beneath the olive trees.
+                        </p>
+
+                    </div>
+
+
+                    <div class="dining-item">
+
+                        <h3>
+                            The Ember Room
+                        </h3>
+
+                        <p>
+                            Wood-fired dishes and local seafood
+                            served after sunset.
+                        </p>
+
+                    </div>
+
+
+                    <div class="dining-item">
+
+                        <h3>
+                            Café Solenne
+                        </h3>
+
+                        <p>
+                            Morning espresso, fresh pastries,
+                            and slow afternoons.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     EXPERIENCES
+======================================================= -->
+
+<section class="experiences" id="experiences">
+
+    <div class="container">
+
+        <div class="section-head reveal">
+
+            <div class="section-label">
+                Experiences
+            </div>
+
+            <h2 class="section-title">
+                Days without<br>
+                an agenda.
+            </h2>
+
+            <p class="section-description"
+               style="color:rgba(255,255,255,.6);">
+                Stay beside the water, disappear into the spa,
+                sail beyond the cove, or simply let the afternoon pass.
+            </p>
+
+        </div>
+
+
+        <div class="experience-grid">
+
+            <article class="experience-card reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1400&q=85"
+                    alt="Resort swimming pool"
+                    loading="lazy">
+
+                <div class="experience-content">
+
+                    <h3>
+                        Horizon Pool
+                    </h3>
+
+                    <p>
+                        An infinity pool overlooking the endless blue.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="experience-card reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1400&q=85"
+                    alt="Luxury spa treatment room"
+                    loading="lazy">
+
+                <div class="experience-content">
+
+                    <h3>
+                        Lumen Spa
+                    </h3>
+
+                    <p>
+                        Slow rituals, warm stone treatments,
+                        and quiet rooms filled with natural light.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="experience-card reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=1400&q=85"
+                    alt="Coastal sunset"
+                    loading="lazy">
+
+                <div class="experience-content">
+
+                    <h3>
+                        Night on the Terrace
+                    </h3>
+
+                    <p>
+                        Cocktails, candlelight, and the sound of waves below.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="experience-card reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1400&q=85"
+                    alt="Boat sailing across the sea"
+                    loading="lazy">
+
+                <div class="experience-content">
+
+                    <h3>
+                        Private Cove
+                    </h3>
+
+                    <p>
+                        Sail beyond the cliffs and discover a quiet stretch
+                        of coastline reserved for your afternoon.
+                    </p>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     GALLERY
+======================================================= -->
+
+<section class="gallery" id="gallery">
+
+    <div class="container">
+
+        <div class="section-head reveal">
+
+            <div class="section-label">
+                Gallery
+            </div>
+
+            <h2 class="section-title">
+                A glimpse of<br>
+                Aurelune.
+            </h2>
+
+        </div>
+
+
+        <div class="gallery-grid">
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1600&q=85"
+                    alt="Luxury resort pool"
+                    loading="lazy">
+
+            </div>
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=85"
+                    alt="Luxury interior"
+                    loading="lazy">
+
+            </div>
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85"
+                    alt="Ocean coastline"
+                    loading="lazy">
+
+            </div>
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85"
+                    alt="Restaurant"
+                    loading="lazy">
+
+            </div>
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=85"
+                    alt="Spa"
+                    loading="lazy">
+
+            </div>
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=85"
+                    alt="Boat on the sea"
+                    loading="lazy">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     AMENITIES
+======================================================= -->
+
+<section class="amenities">
+
+    <div class="container">
+
+        <div class="section-head reveal">
+
+            <div class="section-label">
+                The Details
+            </div>
+
+            <h2 class="section-title">
+                Everything<br>
+                considered.
+            </h2>
+
+        </div>
+
+
+        <div class="amenity-grid">
+
+            <div class="amenity reveal">
+                <div class="amenity-number">01</div>
+                <h3>Private Transfers</h3>
+                <p>Seamless arrival and departure arrangements.</p>
+            </div>
+
+            <div class="amenity reveal">
+                <div class="amenity-number">02</div>
+                <h3>Daily Breakfast</h3>
+                <p>Fresh local ingredients served every morning.</p>
+            </div>
+
+            <div class="amenity reveal">
+                <div class="amenity-number">03</div>
+                <h3>24h Concierge</h3>
+                <p>Personal assistance whenever you need it.</p>
+            </div>
+
+            <div class="amenity reveal">
+                <div class="amenity-number">04</div>
+                <h3>Private Coves</h3>
+                <p>Quiet coastal spaces away from the crowds.</p>
+            </div>
+
+            <div class="amenity reveal">
+                <div class="amenity-number">05</div>
+                <h3>Wellness</h3>
+                <p>Daily movement, spa rituals and relaxation.</p>
+            </div>
+
+            <div class="amenity reveal">
+                <div class="amenity-number">06</div>
+                <h3>Ocean Dining</h3>
+                <p>Long lunches with uninterrupted sea views.</p>
+            </div>
+
+            <div class="amenity reveal">
+                <div class="amenity-number">07</div>
+                <h3>Sailing</h3>
+                <p>Private coastal excursions by boat.</p>
+            </div>
+
+            <div class="amenity reveal">
+                <div class="amenity-number">08</div>
+                <h3>Late Checkout</h3>
+                <p>Leave slowly when your stay comes to an end.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     TESTIMONIALS
+======================================================= -->
+
+<section class="testimonials">
+
+    <div class="container">
+
+        <div class="testimonial-wrap reveal">
+
+            <div class="quote-mark">
+                “
+            </div>
+
+            <div class="quote" id="quote">
+                A place that makes you forget
+                what time it is.
+            </div>
+
+            <div class="quote-author" id="quoteAuthor">
+                Elena M. · London
+            </div>
+
+            <div class="testimonial-controls">
+
+                <button id="prevQuote" aria-label="Previous testimonial">
+                    ←
+                </button>
+
+                <button id="nextQuote" aria-label="Next testimonial">
+                    →
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     FINAL CTA
+======================================================= -->
+
+<section class="final-cta" id="reserve">
+
+    <div class="final-cta-bg">
+
+        <img
+            src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2200&q=90"
+            alt="Coastal landscape at sunset"
+            loading="lazy">
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="cta-content reveal">
+
+            <div class="section-label">
+                Your stay begins here
+            </div>
+
+            <h2>
+                Stay a little<br>
+                longer.
+            </h2>
+
+            <p>
+                Discover a slower rhythm at Maison Aurelune —
+                a fictional private retreat created for this
+                web design concept.
+            </p>
+
+            <button class="button gold reserve-trigger">
+                Request a Reservation
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
+<footer>
+
+    <div class="container">
+
+        <div class="footer-top">
+
+            <div class="footer-brand">
+
+                <h2>
+                    AURELUNE
+                </h2>
+
+                <p>
+                    Isle of Vellamar · A fictional retreat concept
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <div class="footer-column">
+
+                    <h4>Explore</h4>
+
+                    <a href="#about">The Maison</a>
+                    <a href="#suites">Suites</a>
+                    <a href="#dining">Dining</a>
+                    <a href="#experiences">Experiences</a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h4>Discover</h4>
+
+                    <a href="#gallery">Gallery</a>
+                    <a href="#reserve">Reserve</a>
+                    <a href="#home">Back to top</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 Maison Aurelune
+            </span>
+
+            <span>
+                Fictional website concept · Designed for demonstration
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =======================================================
+     RESERVATION MODAL
+======================================================= -->
+
+<div class="modal" id="reservationModal">
+
+    <div class="modal-box">
+
+        <button class="modal-close" id="closeReservation">
+            ×
+        </button>
+
+        <div id="reservationFormArea">
+
+            <div class="section-label">
+                Maison Aurelune
+            </div>
+
+            <h2 class="modal-title">
+                Request<br>
+                your stay.
+            </h2>
+
+            <p class="modal-description">
+                This is a demonstration reservation form.
+                No real booking will be submitted.
+            </p>
+
+
+            <form id="reservationForm">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label for="checkin">
+                            Check-in
+                        </label>
+
+                        <input
+                            type="date"
+                            id="checkin"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="checkout">
+                            Check-out
+                        </label>
+
+                        <input
+                            type="date"
+                            id="checkout"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="guests">
+                            Guests
+                        </label>
+
+                        <select id="guests" required>
+
+                            <option value="">
+                                Select
+                            </option>
+
+                            <option>
+                                1 Guest
+                            </option>
+
+                            <option>
+                                2 Guests
+                            </option>
+
+                            <option>
+                                3 Guests
+                            </option>
+
+                            <option>
+                                4 Guests
+                            </option>
+
+                            <option>
+                                5+ Guests
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="suite">
+                            Suite
+                        </label>
+
+                        <select id="suite" required>
+
+                            <option value="">
+                                Select
+                            </option>
+
+                            <option>
+                                Horizon Suite
+                            </option>
+
+                            <option>
+                                Villa Crepuscolo
+                            </option>
+
+                            <option>
+                                Olive Garden Suite
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label for="name">
+                            Guest Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Your name"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="form-submit">
+
+                    Request Reservation
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <div class="success-message" id="successMessage">
+
+            <div class="check">
+                ✓
+            </div>
+
+            <h2 class="modal-title">
+                Request<br>
+                received.
+            </h2>
+
+            <p class="modal-description">
+                This demonstration form has been submitted
+                successfully. No real reservation was created.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     LIGHTBOX
+======================================================= -->
+
+<div class="lightbox" id="lightbox">
+
+    <button class="lightbox-close" id="closeLightbox">
+        ×
+    </button>
+
+    <img id="lightboxImage" src="" alt="Gallery image">
+
+</div>
+
+
+<!-- =======================================================
+     JAVASCRIPT
+======================================================= -->
+
+<script>
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+const header = document.getElementById("header");
+
+window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 50) {
+        header.classList.add("scrolled");
+    } else {
+        header.classList.remove("scrolled");
+    }
+
+});
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+const menuButton = document.getElementById("menuButton");
+const navLinks = document.getElementById("navLinks");
+
+menuButton.addEventListener("click", () => {
+
+    menuButton.classList.toggle("open");
+    navLinks.classList.toggle("open");
+
+});
+
+
+document.querySelectorAll(".nav-links a").forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        menuButton.classList.remove("open");
+        navLinks.classList.remove("open");
+
+    });
+
+});
+
+
+/* =========================================================
+   SCROLL PROGRESS
+========================================================= */
+
+const progress = document.getElementById("scrollProgress");
+
+window.addEventListener("scroll", () => {
+
+    const scrollTop = window.scrollY;
+
+    const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+
+    const percentage =
+        (scrollTop / height) * 100;
+
+    progress.style.width = percentage + "%";
+
+});
+
+
+/* =========================================================
+   REVEAL ANIMATION
+========================================================= */
+
+const revealElements =
+    document.querySelectorAll(".reveal");
+
+const revealObserver =
+    new IntersectionObserver(
+        (entries, observer) => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("visible");
+
+                    observer.unobserve(entry.target);
+
+                }
+
+            });
+
+        },
+        {
+            threshold: .12
+        }
+    );
+
+
+revealElements.forEach(element => {
+
+    revealObserver.observe(element);
+
+});
+
+
+/* =========================================================
+   ACTIVE NAVIGATION
+========================================================= */
+
+const sections =
+    document.querySelectorAll("main section[id]");
+
+const navItems =
+    document.querySelectorAll(".nav-links a:not(.nav-reserve)");
+
+const sectionObserver =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    navItems.forEach(link => {
+
+                        link.classList.remove("active");
+
+                        if (
+                            link.getAttribute("href") ===
+                            "#" + entry.target.id
+                        ) {
+                            link.classList.add("active");
+                        }
+
+                    });
+
+                }
+
+            });
+
+        },
+        {
+            threshold: .35
+        }
+    );
+
+
+sections.forEach(section => {
+
+    sectionObserver.observe(section);
+
+});
+
+
+/* =========================================================
+   TESTIMONIALS
+========================================================= */
+
+const testimonials = [
+
+    {
+        quote:
+            "A place that makes you forget what time it is.",
+        author:
+            "Elena M. · London"
+    },
+
+    {
+        quote:
+            "Every detail feels effortless, from breakfast to sunset.",
+        author:
+            "Marcus R. · Copenhagen"
+    },
+
+    {
+        quote:
+            "The kind of escape you wish could last forever.",
+        author:
+            "Sofia L. · Milan"
+    },
+
+    {
+        quote:
+            "Quiet mornings, beautiful water, and nowhere else to be.",
+        author:
+            "Daniel K. · Stockholm"
+    }
+
+];
+
+let testimonialIndex = 0;
+
+const quote =
+    document.getElementById("quote");
+
+const quoteAuthor =
+    document.getElementById("quoteAuthor");
+
+
+function updateTestimonial() {
+
+    const current =
+        testimonials[testimonialIndex];
+
+    quote.style.opacity = "0";
+    quoteAuthor.style.opacity = "0";
+
+    setTimeout(() => {
+
+        quote.textContent =
+            current.quote;
+
+        quoteAuthor.textContent =
+            current.author;
+
+        quote.style.opacity = "1";
+        quoteAuthor.style.opacity = "1";
+
+    }, 200);
+
+}
+
+
+document.getElementById("nextQuote")
+    .addEventListener("click", () => {
+
+        testimonialIndex =
+            (testimonialIndex + 1) %
+            testimonials.length;
+
+        updateTestimonial();
+
+    });
+
+
+document.getElementById("prevQuote")
+    .addEventListener("click", () => {
+
+        testimonialIndex =
+            (testimonialIndex - 1 +
+            testimonials.length) %
+            testimonials.length;
+
+        updateTestimonial();
+
+    });
+
+
+/* =========================================================
+   RESERVATION MODAL
+========================================================= */
+
+const reservationModal =
+    document.getElementById("reservationModal");
+
+const closeReservation =
+    document.getElementById("closeReservation");
+
+const reservationTriggers =
+    document.querySelectorAll(".reserve-trigger");
+
+
+reservationTriggers.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        reservationModal.classList.add("show");
+
+        document.body.classList.add("modal-open");
+
+    });
+
+});
+
+
+closeReservation.addEventListener("click", closeReservationModal);
+
+
+reservationModal.addEventListener("click", event => {
+
+    if (event.target === reservationModal) {
+
+        closeReservationModal();
+
+    }
+
+});
+
+
+function closeReservationModal() {
+
+    reservationModal.classList.remove("show");
+
+    document.body.classList.remove("modal-open");
+
+}
+
+
+/* =========================================================
+   RESERVATION FORM
+========================================================= */
+
+const reservationForm =
+    document.getElementById("reservationForm");
+
+const reservationFormArea =
+    document.getElementById("reservationFormArea");
+
+const successMessage =
+    document.getElementById("successMessage");
+
+
+reservationForm.addEventListener("submit", event => {
+
+    event.preventDefault();
+
+    reservationFormArea.style.display = "none";
+
+    successMessage.classList.add("show");
+
+});
+
+
+/* =========================================================
+   LIGHTBOX
+========================================================= */
+
+const lightbox =
+    document.getElementById("lightbox");
+
+const lightboxImage =
+    document.getElementById("lightboxImage");
+
+const closeLightbox =
+    document.getElementById("closeLightbox");
+
+
+document.querySelectorAll(".gallery-item img")
+    .forEach(image => {
+
+        image.parentElement.addEventListener("click", () => {
+
+            lightboxImage.src =
+                image.src;
+
+            lightboxImage.alt =
+                image.alt;
+
+            lightbox.classList.add("show");
+
+            document.body.classList.add("modal-open");
+
+        });
+
+    });
+
+
+closeLightbox.addEventListener("click", () => {
+
+    lightbox.classList.remove("show");
+
+    document.body.classList.remove("modal-open");
+
+});
+
+
+lightbox.addEventListener("click", event => {
+
+    if (event.target === lightbox) {
+
+        lightbox.classList.remove("show");
+
+        document.body.classList.remove("modal-open");
+
+    }
+
+});
+
+
+/* =========================================================
+   ESC KEY
+========================================================= */
+
+document.addEventListener("keydown", event => {
+
+    if (event.key === "Escape") {
+
+        reservationModal.classList.remove("show");
+        lightbox.classList.remove("show");
+
+        document.body.classList.remove("modal-open");
+
+    }
+
+});
+
+
+/* =========================================================
+   DATE VALIDATION
+========================================================= */
+
+const checkin =
+    document.getElementById("checkin");
+
+const checkout =
+    document.getElementById("checkout");
+
+const today =
+    new Date().toISOString().split("T")[0];
+
+checkin.min = today;
+checkout.min = today;
+
+
+checkin.addEventListener("change", () => {
+
+    checkout.min = checkin.value;
+
+});
+
+
+/* =========================================================
+   SMOOTH CTA SCROLL
+========================================================= */
+
+document.querySelectorAll('a[href^="#"]')
+    .forEach(link => {
+
+        link.addEventListener("click", event => {
+
+            const targetId =
+                link.getAttribute("href");
+
+            if (
+                targetId === "#" ||
+                !document.querySelector(targetId)
+            ) {
+                return;
+            }
+
+            event.preventDefault();
+
+            document.querySelector(targetId)
+                .scrollIntoView({
+                    behavior: "smooth"
+                });
+
+        });
+
+    });
+
+</script>
+
+</body>
+</html>
